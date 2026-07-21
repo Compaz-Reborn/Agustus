@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>COMPAS – HUT RI ke-81 | Timur Pasar, Petunjungan</title>
+<title>COMPAZ – HUT RI ke-81 | Timur Pasar, Petunjungan</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -99,7 +99,7 @@
   .hero-subtitle {
     font-size: clamp(0.85rem, 2.5vw, 1.1rem);
     color: rgba(255,255,255,0.75);
-    max-width: 420px;
+    max-width: 460px;
     line-height: 1.6;
     margin-bottom: 2.5rem;
     position: relative;
@@ -166,24 +166,6 @@
   .cta-btn-donasi:hover {
     box-shadow: 0 8px 40px rgba(245,200,66,0.6);
   }
-
-  .scroll-hint {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.4rem;
-    opacity: 0.4;
-    font-size: 0.7rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    animation: bob 2s ease-in-out infinite;
-  }
-  .scroll-hint .arrow { font-size: 1.2rem; }
-  @keyframes bob { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(6px); } }
 
   /* ─── SECTION BASE ──────────────────────────────── */
   section { padding: 5rem 1.5rem; }
@@ -263,10 +245,7 @@
     align-items: center;
     gap: 0.5rem;
   }
-  .bank-holder {
-    font-size: 0.85rem;
-    color: rgba(255,255,255,0.7);
-  }
+  .bank-holder { font-size: 0.85rem; color: rgba(255,255,255,0.7); }
   .copy-btn {
     background: rgba(245,200,66,0.15);
     border: 1px solid var(--emas);
@@ -278,10 +257,7 @@
     font-weight: 600;
     transition: all 0.2s;
   }
-  .copy-btn:hover {
-    background: var(--emas);
-    color: #000;
-  }
+  .copy-btn:hover { background: var(--emas); color: #000; }
   .qris-container {
     text-align: center;
     background: rgba(255,255,255,0.04);
@@ -301,185 +277,85 @@
     max-width: 240px;
     width: 100%;
   }
-  .qris-img-wrap:hover {
-    transform: scale(1.03);
-    box-shadow: 0 10px 30px rgba(245,200,66,0.3);
-  }
-  .qris-img {
-    width: 100%;
-    display: block;
-    height: auto;
-  }
-  .qris-hint {
-    font-size: 0.75rem;
-    color: rgba(255,255,255,0.6);
-    margin-top: 0.8rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.4rem;
-  }
+  .qris-img-wrap:hover { transform: scale(1.03); box-shadow: 0 10px 30px rgba(245,200,66,0.3); }
+  .qris-img { width: 100%; display: block; height: auto; }
+  .qris-hint { font-size: 0.75rem; color: rgba(255,255,255,0.6); margin-top: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 0.4rem; }
 
-  /* ─── MODAL QRIS ─────────────────────────────────── */
-  .modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    background: rgba(0,0,0,0.85);
-    backdrop-filter: blur(8px);
-    align-items: center;
-    justify-content: center;
-    padding: 1.5rem;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+  /* ─── TEMA ──────────────────────────────────────── */
+  #tema { background: var(--merah); text-align: center; position: relative; overflow: hidden; }
+  .tema-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 8vw, 5.5rem);
+    letter-spacing: 0.06em;
+    line-height: 1.1;
+    text-shadow: 0 4px 30px rgba(0,0,0,0.4);
+    color: var(--emas);
   }
-  .modal.show {
-    display: flex;
-    opacity: 1;
-  }
-  .modal-content {
-    background: #181818;
-    border: 1px solid rgba(245,200,66,0.4);
-    border-radius: 20px;
-    padding: 2rem;
-    max-width: 450px;
-    width: 100%;
-    text-align: center;
-    position: relative;
-    transform: scale(0.9);
-    transition: transform 0.3s ease;
-  }
-  .modal.show .modal-content {
-    transform: scale(1);
-  }
-  .modal-close {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: rgba(255,255,255,0.1);
-    border: none;
-    color: #fff;
-    font-size: 1.5rem;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s;
-  }
-  .modal-close:hover {
-    background: var(--merah);
-  }
-  .modal-qris-img {
-    width: 100%;
-    max-width: 320px;
-    border-radius: 12px;
-    margin: 1rem 0;
-    border: 1px solid #333;
-  }
-  .download-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: var(--emas);
-    color: #000;
-    font-weight: 700;
-    font-size: 0.9rem;
-    padding: 0.8rem 1.8rem;
-    border-radius: 50px;
-    text-decoration: none;
-    transition: all 0.2s;
-    margin-top: 0.5rem;
-  }
-  .download-btn:hover {
-    background: #fff;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 20px rgba(245,200,66,0.4);
-  }
+  .tema-sub { font-size: 1.05rem; opacity: 0.9; margin-top: 1rem; color: #fff; }
 
-  /* ─── RESPONSIVE FOR DONATION ───────────────────── */
-  @media (max-width: 768px) {
-    .donasi-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  /* ─── TENTANG ───────────────────────────────────── */
-  #tentang { background: linear-gradient(180deg, #0D0D0D 0%, #1a0505 100%); }
-  .tentang-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2.5rem; }
-  .stat-card {
+  /* ─── LOMBA ─────────────────────────────────────── */
+  #lomba { background: linear-gradient(180deg, #0D0D0D 0%, #1a0505 100%); }
+  .lomba-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.2rem; margin-top: 2rem; }
+  .lomba-card {
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(255,255,255,0.08);
     border-radius: 16px;
-    padding: 1.8rem 1.5rem;
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.25s, transform 0.25s;
+    padding: 1.2rem;
+    transition: all 0.25s;
   }
-  .stat-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--merah), var(--emas));
-  }
-  .stat-card:hover { border-color: rgba(245,200,66,0.3); transform: translateY(-4px); }
-  .stat-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 3rem;
-    background: linear-gradient(135deg, var(--emas), #fff);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    line-height: 1;
-    margin-bottom: 0.3rem;
-  }
-  .stat-desc { font-size: 0.85rem; color: rgba(255,255,255,0.6); line-height: 1.4; }
-  .tentang-text {
-    color: rgba(255,255,255,0.75);
-    line-height: 1.8;
-    font-size: 1rem;
-    margin-top: 2rem;
-    padding: 1.5rem;
-    border-left: 3px solid var(--merah);
-    background: rgba(204,0,1,0.05);
-    border-radius: 0 12px 12px 0;
-  }
-  .tentang-text strong { color: var(--putih); }
+  .lomba-card:hover { border-color: rgba(245,200,66,0.4); background: rgba(245,200,66,0.05); transform: translateY(-4px); }
+  .lomba-title { font-weight: 700; font-size: 1rem; color: var(--emas); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+  .lomba-pj { font-size: 0.8rem; color: rgba(255,255,255,0.65); line-height: 1.4; }
+
+  /* ─── RUNDOWN ───────────────────────────────────── */
+  #rundown { background: #0f0f0f; }
+  .rundown-table { width: 100%; border-collapse: collapse; margin-top: 2rem; font-size: 0.9rem; }
+  .rundown-table thead tr { background: var(--merah); }
+  .rundown-table th { padding: 0.85rem 1.2rem; text-align: left; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; }
+  .rundown-table tbody tr { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .rundown-table td { padding: 1rem 1.2rem; color: rgba(255,255,255,0.85); vertical-align: top; }
+  .waktu-badge { background: rgba(245,200,66,0.12); color: var(--emas); font-weight: 700; font-size: 0.78rem; padding: 0.25rem 0.6rem; border-radius: 6px; display: inline-block; }
+
+  /* ─── ANGGARAN ───────────────────────────────────── */
+  #anggaran { background: linear-gradient(180deg, #1a0505 0%, #0D0D0D 100%); }
+  .anggaran-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 18px; padding: 1.5rem; margin-top: 1.5rem; }
+  .anggaran-item { display: flex; justify-content: space-between; padding: 0.8rem 0; border-bottom: 1px dashed rgba(255,255,255,0.1); font-size: 0.9rem; }
+  .anggaran-total { display: flex; justify-content: space-between; padding-top: 1.2rem; font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--emas); }
+
+  /* ─── PANITIA ───────────────────────────────────── */
+  #panitia { background: #0D0D0D; }
+  .foto-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+  .foto-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 18px; padding: 1.2rem 0.8rem; text-align: center; cursor: pointer; transition: all 0.25s; }
+  .foto-card:hover { border-color: rgba(245,200,66,0.35); transform: translateY(-4px); }
+  .foto-card.ketua { border-color: rgba(245,200,66,0.35); background: rgba(245,200,66,0.06); }
+  .foto-wrap { width: 72px; height: 72px; border-radius: 50%; margin: 0 auto 0.8rem; overflow: hidden; border: 2.5px solid rgba(255,255,255,0.12); background: #1a1a1a; }
+  .foto-card.ketua .foto-wrap { width: 80px; height: 80px; border-color: #F5C842; box-shadow: 0 0 20px rgba(245,200,66,0.3); }
+  .foto-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .foto-name { font-weight: 700; font-size: 0.8rem; color: #fff; margin-bottom: 0.2rem; }
+  .foto-role { font-size: 0.65rem; color: var(--emas); text-transform: uppercase; letter-spacing: 0.08em; }
+
+  .anggota-divider { display: flex; align-items: center; gap: 1rem; margin: 1rem 0 1.5rem; }
+  .anggota-divider-line { flex: 1; height: 1px; background: rgba(255,255,255,0.08); }
+  .anggota-divider-label { font-size: 0.65rem; letter-spacing: 0.22em; color: rgba(255,255,255,0.3); text-transform: uppercase; white-space: nowrap; }
+  .anggota-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .anggota-chip { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 50px; padding: 0.35rem 0.9rem; font-size: 0.75rem; color: rgba(255,255,255,0.7); }
+
+  /* ─── MODAL ─────────────────────────────────────── */
+  .modal { display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 1.5rem; opacity: 0; transition: opacity 0.3s ease; }
+  .modal.show { display: flex; opacity: 1; }
+  .modal-content { background: #181818; border: 1px solid rgba(245,200,66,0.4); border-radius: 20px; padding: 2rem; max-width: 450px; width: 100%; text-align: center; position: relative; }
+  .modal-close { position: absolute; top: 1rem; right: 1rem; background: rgba(255,255,255,0.1); border: none; color: #fff; font-size: 1.5rem; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; }
+  .modal-img { width: 100%; max-width: 320px; border-radius: 12px; margin: 1rem 0; }
+  .download-btn { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--emas); color: #000; font-weight: 700; font-size: 0.9rem; padding: 0.8rem 1.8rem; border-radius: 50px; text-decoration: none; }
 
   /* ─── FOOTER ────────────────────────────────────── */
-  footer {
-    background: #000;
-    text-align: center;
-    padding: 3rem 1.5rem;
-    border-top: 1px solid rgba(255,255,255,0.08);
-  }
-  .footer-logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 3rem;
-    background: linear-gradient(135deg, var(--putih), var(--emas));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    margin-bottom: 0.5rem;
-  }
+  footer { background: #000; text-align: center; padding: 3rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.08); }
+  .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; background: linear-gradient(135deg, var(--putih), var(--emas)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
   .footer-sub { font-size: 0.8rem; color: rgba(255,255,255,0.4); line-height: 1.6; }
 
-  /* ─── ANIMATIONS ────────────────────────────────── */
+  @media (max-width: 768px) { .donasi-grid { grid-template-columns: 1fr; } }
   .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
-
-  /* ─── COUNTDOWN ─────────────────────────────────── */
-  .countdown-wrap { display: flex; gap: 1rem; justify-content: center; margin: 2.5rem 0; }
-  .cd-box {
-    background: rgba(0,0,0,0.25);
-    border-radius: 14px;
-    padding: 1rem 1.3rem;
-    min-width: 70px;
-    text-align: center;
-    backdrop-filter: blur(10px);
-  }
-  .cd-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; line-height: 1; display: block; }
-  .cd-label { font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.7; margin-top: 0.2rem; }
 </style>
 </head>
 <body>
@@ -490,21 +366,18 @@
     <div class="flag-bg-merah"></div>
     <div class="flag-bg-putih"></div>
   </div>
-  <div class="confetti" id="confetti"></div>
 
-  <span class="hero-eyebrow">🇮🇩 Desa Petunjungan · Timur Pasar · HUT RI ke-81</span>
+  <span class="hero-eyebrow">🇮🇩 Kec. Bulakamba, Kab. Brebes · COMPAZ · HUT RI ke-81</span>
 
   <div class="hero-logo">
     <span class="bintang-hias">✦</span>
     <span class="bintang-hias">★</span>
     <span class="bintang-hias">✦</span>
-    <div class="hero-compas">COMPAS</div>
+    <div class="hero-compas">COMPAZ</div>
   </div>
 
   <p class="hero-subtitle">
-    <strong>Komplek Pasar</strong> bersatu merayakan 81 tahun<br>
-    kemerdekaan Republik Indonesia tercinta.<br>
-    Mari kita rayakan bersama!
+    Masyarakat warga <strong>Komplek Pasar (COMPAZ)</strong>, Desa Petunjungan & Banjaratma bersatu memperingati HUT Ke-81 RI.
   </p>
 
   <div class="hero-date-bar">
@@ -513,26 +386,23 @@
       <span class="date-val">23 AGUSTUS 2026</span>
     </div>
     <div class="date-item">
-      <span class="date-label">🎤 Pentas Seni</span>
+      <span class="date-label">🎤 Pentas Seni & Organ Tunggal</span>
       <span class="date-val">29 AGUSTUS 2026</span>
     </div>
   </div>
 
-  <div class="countdown-wrap" id="countdown">
-    <div class="cd-box"><span class="cd-num" id="cd-d">--</span><span class="cd-label">Hari</span></div>
-    <div class="cd-box"><span class="cd-num" id="cd-h">--</span><span class="cd-label">Jam</span></div>
-    <div class="cd-box"><span class="cd-num" id="cd-m">--</span><span class="cd-label">Menit</span></div>
-    <div class="cd-box"><span class="cd-num" id="cd-s">--</span><span class="cd-label">Detik</span></div>
-  </div>
-
   <div class="btn-group">
-    <a href="#rundown" class="cta-btn">Lihat Rundown Acara</a>
-    <a href="#donasi" class="cta-btn cta-btn-donasi">💛 Donasi Sekarang</a>
+    <a href="#lomba" class="cta-btn">Daftar Perlombaan</a>
+    <a href="#donasi" class="cta-btn cta-btn-donasi">💛 Donasi / Bantuan Dana</a>
   </div>
+</section>
 
-  <div class="scroll-hint">
-    <span class="arrow">↓</span>
-    <span>Scroll</span>
+<!-- ─── TEMA ──────────────────────────────────────── -->
+<section id="tema">
+  <div class="container reveal">
+    <span class="section-label" style="color: #fff;">Tema Kegiatan Proposal</span>
+    <div class="tema-headline">"NKRI HARGA MATI"</div>
+    <p class="tema-sub">Semangat Proklamasi 17 Agustus 2026 demi mempererat persatuan & gotong royong warga COMPAZ.</p>
   </div>
 </section>
 
@@ -540,18 +410,17 @@
 <section id="donasi">
   <div class="container reveal">
     <span class="section-label">Dukungan & Partisipasi</span>
-    <h2 class="section-title">Donasi Kemerdekaan</h2>
+    <h2 class="section-title">Permohonan Bantuan Dana</h2>
     <div class="divider"></div>
     <p style="color: rgba(255,255,255,0.75); line-height: 1.6;">
-      Mari turut berpartisipasi dan mensukseskan rangkaian kegiatan peringatan HUT RI ke-81 COMPAS. Dukungan dan bantuan donasi Anda sangat berarti bagi kelancaran acara kami.
+      Guna mendukung kelancaran pelaksanaan kegiatan HUT RI ke-81 COMPAZ, kami memohon dukungan bantuan dana untuk operasional, hadiah, dekorasi, dan hiburan.
     </p>
 
     <div class="donasi-grid">
-      <!-- Detail Bank -->
       <div class="donasi-card">
         <h3 style="font-size: 1.2rem; font-weight: 700; color: #fff;">Transfer Bank</h3>
         <p style="font-size: 0.85rem; color: rgba(255,255,255,0.6); margin-top: 0.3rem;">
-          Anda dapat menyalurkan donasi secara langsung melalui rekening bank berikut:
+          Penyaluran donasi dapat dilakukan melalui rekening panitia berikut:
         </p>
 
         <div class="bank-box">
@@ -564,104 +433,218 @@
         </div>
       </div>
 
-      <!-- Detail QRIS -->
       <div class="qris-container">
         <h3 style="font-size: 1.2rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem;">Pembayaran via QRIS</h3>
         <p style="font-size: 0.85rem; color: rgba(255,255,255,0.6); margin-bottom: 1rem;">
-          Scan QRIS menggunakan M-Banking / E-Wallet (GoPay, OVO, Dana, ShopeePay, dll)
+          Scan QRIS melalui M-Banking atau E-Wallet pilihan Anda
         </p>
 
         <div class="qris-img-wrap" onclick="openQrisModal()">
-          <!-- Pastikan nama file sesuai gambar di GitHub satu folder dengan index.html -->
-          <img src="qris.jpg" alt="QRIS Compas Reborn" class="qris-img" id="qris-thumbnail">
+          <img src="qris.jpg" alt="QRIS Compas Reborn" class="qris-img">
         </div>
         <div class="qris-hint">
-          🔍 <span>Klik gambar QRIS untuk memperbesar & download</span>
+          🔍 <span>Klik QRIS untuk memperbesar & download</span>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ─── MODAL DISPLAY QRIS ─────────────────────────── -->
+<!-- ─── DETAIL LOMBA ──────────────────────────────── -->
+<section id="lomba">
+  <div class="container reveal">
+    <span class="section-label">Jenis Kegiatan</span>
+    <h2 class="section-title">11 Perlombaan Rakyat</h2>
+    <div class="divider"></div>
+
+    <div class="lomba-grid">
+      <div class="lomba-card">
+        <div class="lomba-title">🍪 1. Makan Biskuit</div>
+        <div class="lomba-pj">Koordinator: <strong>Yeni, Fajar, Indi, Lia, Nisa</strong></div>
+      </div>
+      <div class="lomba-card">
+        <div class="lomba-title">🏃 2. Balap Karung</div>
+        <div class="lomba-pj">Koordinator: <strong>Tata, Khanza, Anggi</strong></div>
+      </div>
+      <div class="lomba-card">
+        <div class="lomba-title">🎈 3. Estafet Cup Tiup Balon</div>
+        <div class="lomba-pj">Koordinator: <strong>Danar, Yeni, Nia</strong></div>
+      </div>
+      <div class="lomba-card">
+        <div class="lomba-title">🧺 4. Menggiring Cepon</div>
+        <div class="lomba-pj">Koordinator: <strong>Fathur, Salsa, Hurni</strong></div>
+      </div>
+      <div class="lomba-card">
+        <div class="lomba-title">🥤 5. Masukkan Sedotan</div>
+        <div class="lomba-pj">Koordinator: <strong>Fajar, Lia, Riko</strong></div>
+      </div>
+      <div class="lomba-card">
+        <div class="lomba-title">🏺 6. Pentung Pendil</div>
+        <div class="lomba-pj">Koordinator: <strong>Awan, Putri, Alfin</strong></div>
+      </div>
+      <div class="lomba-card">
+        <div class="lomba-title">🎵 7. Tiup Cup + Musik</div>
+        <div class="lomba-pj">Koordinator: <strong>Septa, Dinda, Fathur</strong></div>
+      </div>
+      <div class="lomba-card">
+        <div class="lomba-title">💃 8. Bola Dangdut</div>
+        <div class="lomba-pj">Koordinator: <strong>Arum, Fardan, Khanza, Anggi, Keyra, Danu</strong></div>
+      </div>
+      <div class="lomba-card">
+        <div class="lomba-title">🍾 9. Memasukkan Air ke Botol</div>
+        <div class="lomba-pj">Koordinator: <strong>Roy, Indi, Diyah, Sari, Nisa, Sunil, Dalla, Lia, Dinda</strong></div>
+      </div>
+      <div class="lomba-card">
+        <div class="lomba-title">🎈 10. Estafet Balon Sarung</div>
+        <div class="lomba-pj">Koordinator: <strong>Panitia Lomba</strong></div>
+      </div>
+      <div class="lomba-card">
+        <div class="lomba-title">📦 11. Estafet Kardus</div>
+        <div class="lomba-pj">Koordinator: <strong>Panitia Lomba</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── RUNDOWN ACARA ─────────────────────────────── -->
+<section id="rundown">
+  <div class="container reveal">
+    <span class="section-label">Jadwal Pelaksanaan</span>
+    <h2 class="section-title">Waktu & Tempat</h2>
+    <div class="divider"></div>
+
+    <table class="rundown-table">
+      <thead>
+        <tr>
+          <th>Kegiatan</th>
+          <th>Hari, Tanggal</th>
+          <th>Waktu</th>
+          <th>Tempat</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Pelaksanaan Perlombaan</strong></td>
+          <td>Minggu, 23 Agustus 2026</td>
+          <td><span class="waktu-badge">08.00 WIB - Selesai</span></td>
+          <td>Lingkungan Timur Pasar/Komplek Pasar (COMPAZ)</td>
+        </tr>
+        <tr>
+          <td><strong>Pentas Seni & Organ Tunggal</strong></td>
+          <td>Sabtu, 29 Agustus 2026</td>
+          <td><span class="waktu-badge">20.00 - 23.30 WIB</span></td>
+          <td>Lingkungan Timur Pasar/Komplek Pasar (COMPAZ)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ─── RENCANA ANGGARAN ───────────────────────────── -->
+<section id="anggaran">
+  <div class="container reveal">
+    <span class="section-label">Estimasi Rencana Anggaran</span>
+    <h2 class="section-title">Rencana Biaya Kegiatan</h2>
+    <div class="divider"></div>
+
+    <div class="anggaran-box">
+      <div class="anggaran-item">
+        <span>1. Dekorasi + Perlengkapan</span>
+        <strong>Rp. 2.000.000,-</strong>
+      </div>
+      <div class="anggaran-item">
+        <span>2. Hiburan (Pentas Seni & Organ Tunggal)</span>
+        <strong>Rp. 10.000.000,-</strong>
+      </div>
+      <div class="anggaran-item">
+        <span>3. Konsumsi (Panitia, Penampil & Tasyakuran)</span>
+        <strong>Rp. 2.400.000,-</strong>
+      </div>
+      <div class="anggaran-item">
+        <span>4. Hadiah Perlombaan</span>
+        <strong>Rp. 2.000.000,-</strong>
+      </div>
+      <div class="anggaran-item">
+        <span>5. Operasional Dan Lain-Lain</span>
+        <strong>Rp. 2.500.000,-</strong>
+      </div>
+      <div class="anggaran-total">
+        <span>TOTAL ESTIMASI</span>
+        <span>Rp. 18.900.000,-</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PANITIA ───────────────────────────────────── -->
+<section id="panitia">
+  <div class="container reveal">
+    <span class="section-label">Susunan Kepanitiaan</span>
+    <h2 class="section-title">Panitia HUT RI ke-81 COMPAZ</h2>
+    <div class="divider"></div>
+
+    <!-- Grid Foto Panitia Utama (Klik foto untuk memperbesar modal) -->
+    <div class="foto-grid" id="fotoGrid"></div>
+
+    <div class="anggota-divider">
+      <div class="anggota-divider-line"></div>
+      <span class="anggota-divider-label">Panitia & Seksi Pelaksana</span>
+      <div class="anggota-divider-line"></div>
+    </div>
+
+    <div class="anggota-list">
+      <span class="anggota-chip">🎤 Fajar, Putri — MC Acara</span>
+      <span class="anggota-chip">🎭 Lia, Nisa, Salsa, Sunil, Anggi, Tata — Seksi Acara</span>
+      <span class="anggota-chip">🎤 Yeni, Indi, Gita, Fajar — Seksi Pentas Seni</span>
+      <span class="anggota-chip">🔧 Danar, Zaki, Fardan — Perlengkapan</span>
+      <span class="anggota-chip">🍱 Dinda, Yeni, Diyah, Keyra, Khanza, Anggi, Arum, Sari — Konsumsi</span>
+      <span class="anggota-chip">📸 Dalla, Indi, Fathur — Dokumentasi</span>
+      <span class="anggota-chip">🔒 Roger Danuarta & Keamanan — Keamanan</span>
+      <span class="anggota-chip">🌟 Seluruh Sesepuh COMPAZ — Pembimbing</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── MODAL DISPLAY ─────────────────────────────── -->
 <div class="modal" id="qrisModal" onclick="closeQrisModal(event)">
   <div class="modal-content" onclick="event.stopPropagation()">
     <button class="modal-close" onclick="closeQrisModal()">&times;</button>
-    <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--emas); letter-spacing: 0.05em;">QRIS COMPAS REBORN</h3>
-    <p style="font-size: 0.8rem; color: rgba(255,255,255,0.7);">Scan atau simpan gambar QRIS di bawah ini untuk berdonasi</p>
-    
-    <img src="qris.jpg" alt="QRIS Compas Reborn Full" class="modal-qris-img" id="qris-full">
-    
+    <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--emas);">QRIS COMPAZ REBORN</h3>
+    <p style="font-size: 0.8rem; color: rgba(255,255,255,0.7);">Scan atau download QRIS berikut untuk bantuan dana proposal</p>
+    <img src="qris.jpg" alt="QRIS Full" class="modal-img">
     <div>
-      <a href="qris.jpg" download="QRIS-COMPAS-HUT-RI-81.jpg" class="download-btn">
-        📥 Download Gambar QRIS
-      </a>
+      <a href="qris.jpg" download="QRIS-COMPAZ-HUT-RI-81.jpg" class="download-btn">📥 Download QRIS</a>
     </div>
   </div>
 </div>
 
-<!-- ─── TENTANG ───────────────────────────────────── -->
-<section id="tentang">
-  <div class="container reveal">
-    <span class="section-label">Tentang Acara</span>
-    <h2 class="section-title">Satu Semangat,<br>Satu Kampung</h2>
-    <div class="divider"></div>
-    <div class="tentang-grid">
-      <div class="stat-card">
-        <div class="stat-num">81</div>
-        <div class="stat-desc">Tahun Kemerdekaan Republik Indonesia</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num">COMPAS</div>
-        <div class="stat-desc">Komplek Pasar Timur, Desa Petunjungan</div>
-      </div>
-    </div>
-
-    <div class="tentang-text">
-      <strong>COMPAS (Komplek Pasar)</strong> merupakan wadah kebersamaan dan silaturahmi warga Timur Pasar, Desa Petunjungan. Dalam rangka memeriahkan HUT Ke-81 Republik Indonesia, kami menyelenggarakan serangkaian kegiatan lomba rakyat dan pentas seni budaya untuk mempererat tali persaudaraan antar warga.
-    </div>
+<div class="modal" id="panitiaModal" onclick="closePanitiaModal(event)">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closePanitiaModal()">&times;</button>
+    <h3 id="panitia-modal-title" style="font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--emas);">FOTO PANITIA</h3>
+    <p id="panitia-modal-role" style="font-size: 0.8rem; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 0.1em;"></p>
+    <img src="" alt="Foto Panitia" class="modal-img" id="panitia-modal-img">
   </div>
-</section>
+</div>
 
 <!-- ─── FOOTER ────────────────────────────────────── -->
 <footer>
-  <div class="footer-logo">COMPAS</div>
+  <div class="footer-logo">COMPAZ</div>
   <p class="footer-sub">
-    Panitia HUT RI ke-81 · Timur Pasar, Desa Petunjungan<br>
-    © 2026 COMPAS. All Rights Reserved.
+    Panitia Peringatan HUT RI ke-81 · Komplek Pasar (COMPAZ)<br>
+    RT 01 RW 01 Desa Petunjungan & Banjaratma, Kec. Bulakamba, Kab. Brebes<br>
+    © 2026 COMPAZ. All Rights Reserved.
   </p>
 </footer>
 
 <script>
-  // Countdown Timer
-  const targetDate = new Date("August 23, 2026 08:00:00").getTime();
-  function updateCountdown() {
-    const now = new Date().getTime();
-    const diff = targetDate - now;
-
-    if (diff > 0) {
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-      document.getElementById("cd-d").innerText = days;
-      document.getElementById("cd-h").innerText = hours;
-      document.getElementById("cd-m").innerText = minutes;
-      document.getElementById("cd-s").innerText = seconds;
-    }
-  }
-  setInterval(updateCountdown, 1000);
-  updateCountdown();
-
-  // Reveal Animation on Scroll
+  // Reveal Animation
   const reveals = document.querySelectorAll('.reveal');
   function revealOnScroll() {
     reveals.forEach(el => {
       const windowHeight = window.innerHeight;
       const elementTop = el.getBoundingClientRect().top;
-      const elementVisible = 100;
-      if (elementTop < windowHeight - elementVisible) {
+      if (elementTop < windowHeight - 100) {
         el.classList.add('visible');
       }
     });
@@ -671,26 +654,57 @@
 
   // Copy Rekening Function
   function copyRekening() {
-    const rek = "901774200411";
-    navigator.clipboard.writeText(rek).then(() => {
+    navigator.clipboard.writeText("901774200411").then(() => {
       alert("Nomor rekening SeaBank (901774200411) berhasil disalin!");
-    }).catch(err => {
-      console.error("Gagal menyalin text: ", err);
     });
   }
 
-  // QRIS Modal Controls
-  function openQrisModal() {
-    const modal = document.getElementById("qrisModal");
-    modal.classList.add("show");
-    document.body.style.overflow = "hidden";
-  }
+  // Render Panitia Utama dari struktur awal HTML (Lengkap dengan Google Drive Avatar & Event Klik)
+  const DEFAULT_AVA = 'https://api.dicebear.com/9.x/initials/svg?backgroundType=gradientLinear&backgroundColor=CC0001,8B0000&textColor=ffffff&fontSize=38&fontWeight=700&chars=1&seed=';
+  const panitiaData = [
+    { name: 'Riko Dhio Ariyanto', role: '👑 Ketua Panitia', foto: null, ketua: true },
+    { name: 'Alfin Imam Persada', role: '🤝 Wakil Ketua', foto: 'https://lh3.googleusercontent.com/d/1lK07Iv2iU6sAqwFeTctIYvltN38M0YOE=w400' },
+    { name: 'Salsa Putri Marnani', role: '📝 Sekretaris I', foto: 'https://lh3.googleusercontent.com/d/1lEiHEiDKTyexlGyxzbyo_pxBKs7cj_Ty=w400' },
+    { name: 'Fathurrohman S.', role: '📝 Sekretaris II', foto: 'https://lh3.googleusercontent.com/d/1Y9v0QgxlpKSG9C9aK33tEp38G1zTgMF-=w400' },
+    { name: 'Dinda Fatimah', role: '💰 Bendahara I', foto: 'https://lh3.googleusercontent.com/d/1155QBkadiIIfhl9ErcjcyDW_C-fJHGno=w400' },
+    { name: 'Yeni Nuraini', role: '💰 Bendahara II', foto: null },
+    { name: 'Dalla Ruci', role: '📸 Dokumentasi', foto: 'https://lh3.googleusercontent.com/d/1RneMHOiivp9C5qnfbCrsYGxv3Kq2BNaT=w400' },
+    { name: 'Roger Danuarta', role: '🔒 Keamanan', foto: 'https://lh3.googleusercontent.com/d/1A8mAC5rR-9YNRygCXaCeLRVwUUERDxlH=w400' }
+  ];
 
+  const fotoGrid = document.getElementById('fotoGrid');
+  panitiaData.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'foto-card' + (p.ketua ? ' ketua' : '');
+    const src = p.foto || (DEFAULT_AVA + encodeURIComponent(p.name));
+    const fallback = DEFAULT_AVA + encodeURIComponent(p.name);
+    
+    card.innerHTML = `<div class="foto-wrap"><img src="${src}" alt="${p.name}" loading="lazy" onerror="this.onerror=null;this.src='${fallback}'"></div><div class="foto-name">${p.name}</div><div class="foto-role">${p.role}</div>`;
+    
+    // Klik pada foto panitia untuk membuka modal
+    card.onclick = () => openPanitiaModal(p.name, p.role, src);
+    fotoGrid.appendChild(card);
+  });
+
+  // Modal Controls
+  function openQrisModal() {
+    document.getElementById("qrisModal").classList.add("show");
+  }
   function closeQrisModal(e) {
     if (!e || e.target === document.getElementById("qrisModal") || e.target.classList.contains("modal-close")) {
-      const modal = document.getElementById("qrisModal");
-      modal.classList.remove("show");
-      document.body.style.overflow = "auto";
+      document.getElementById("qrisModal").classList.remove("show");
+    }
+  }
+
+  function openPanitiaModal(nama, jabatan, imgSrc) {
+    document.getElementById("panitia-modal-title").innerText = nama;
+    document.getElementById("panitia-modal-role").innerText = jabatan;
+    document.getElementById("panitia-modal-img").src = imgSrc;
+    document.getElementById("panitiaModal").classList.add("show");
+  }
+  function closePanitiaModal(e) {
+    if (!e || e.target === document.getElementById("panitiaModal") || e.target.classList.contains("modal-close")) {
+      document.getElementById("panitiaModal").classList.remove("show");
     }
   }
 </script>
