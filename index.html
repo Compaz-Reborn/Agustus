@@ -524,15 +524,50 @@
   </div>
 </section>
 
-<!-- ─── TEMA ──────────────────────────────────────── -->
-<section id="tema">
+<!-- ─── PROPOSAL ──────────────────────────────────── -->
+<section id="proposal">
   <div class="container reveal">
-    <span class="section-label" style="color: #fff;">Tema Kegiatan Proposal</span>
-    <div class="tema-headline">"NKRI HARGA MATI"</div>
-    <p class="tema-sub">Semangat Proklamasi 17 Agustus 2026 demi mempererat persatuan & gotong royong warga COMPAZ.</p>
+    <span class="section-label">Dokumen Acara</span>
+    <h2 class="section-title">Proposal Kegiatan</h2>
+    <div class="divider"></div>
+    <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem;">
+      Klik pada gambar untuk memperbesar lembaran proposal.
+    </p>
+
+    <div class="slider-container" id="proposalSlider">
+      <button class="slider-btn prev" id="prevBtn">&#10094;</button>
+      <button class="slider-btn next" id="nextBtn">&#10095;</button>
+      
+      <div class="slider-track" id="sliderTrack">
+        <!-- Sesuaikan src dengan nama file gambar scan proposal kamu -->
+        <div class="slide"><img src="Proposal_1.jpg" alt="Proposal Halaman 1" onclick="openLightbox(this.src)"></div>
+        <div class="slide"><img src="Proposal_2.jpg" alt="Proposal Halaman 2" onclick="openLightbox(this.src)"></div>
+        <div class="slide"><img src="Proposal_3.jpg" alt="Proposal Halaman 3" onclick="openLightbox(this.src)"></div>
+        <div class="slide"><img src="Proposal_4.jpg" alt="Proposal Halaman 4" onclick="openLightbox(this.src)"></div>
+        <div class="slide"><img src="Proposal_5.jpg" alt="Proposal Halaman 5" onclick="openLightbox(this.src)"></div>
+        <div class="slide"><img src="Proposal_6.jpg" alt="Proposal Halaman 6" onclick="openLightbox(this.src)"></div>
+      </div>
+    </div>
+
+    <!-- Indicator Dots -->
+    <div class="slider-dots" id="sliderDots"></div>
   </div>
 </section>
 
+<!-- Modal Lightbox (Lihat Gambar Penuh) -->
+<div class="proposal-lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close">&times;</span>
+  <img id="lightboxImg" src="" alt="Proposal Fullscreen">
+</div>
+
+<!-- ─── TEMA ──────────────────────────────────────── -->
+<section id="tema">
+  <div class="container reveal">
+    <span class="section-label" style="color: rgba(255,255,255,0.8);">Tema Acara</span>
+    <h2 class="tema-headline">Nusantara Baru,<br>Indonesia Maju</h2>
+    <p class="tema-sub">Nusantara Baru, Indonesia Maju — Menjaga Semangat Persatuan di Timur Pasar</p>
+  </div>
+</section>
 <!-- ─── DONASI ─────────────────────────────────────── -->
 <section id="donasi">
   <div class="container reveal">
