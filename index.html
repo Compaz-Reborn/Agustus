@@ -415,7 +415,6 @@
   }
   .tema-sub { font-size: 1rem; opacity: 0.85; margin-top: 1rem; position: relative; }
 
-
   /* ─── LOMBA ─────────────────────────────────────── */
   #lomba { background: linear-gradient(180deg, #0D0D0D 0%, #1a0505 100%); }
   .lomba-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.2rem; margin-top: 2rem; }
@@ -448,6 +447,35 @@
   .anggaran-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 18px; padding: 1.5rem; margin-top: 1.5rem; }
   .anggaran-item { display: flex; justify-content: space-between; padding: 0.8rem 0; border-bottom: 1px dashed rgba(255,255,255,0.1); font-size: 0.9rem; }
   .anggaran-total { display: flex; justify-content: space-between; padding-top: 1.2rem; font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--emas); }
+  
+  .buku-kas-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+  .buku-kas-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(245,200,66,0.4);
+    color: var(--putih);
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.9rem 2.2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    backdrop-filter: blur(8px);
+    transition: all 0.25s ease;
+  }
+  .buku-kas-btn:hover {
+    background: var(--emas);
+    color: #0D0D0D;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 30px rgba(245,200,66,0.35);
+  }
 
   /* ─── PANITIA ───────────────────────────────────── */
   #panitia { background: #0D0D0D; }
@@ -539,7 +567,6 @@
       <button class="slider-btn next" id="nextBtn">&#10095;</button>
       
       <div class="slider-track" id="sliderTrack">
-        <!-- Sesuaikan src dengan nama file gambar scan proposal kamu -->
         <div class="slide"><img src="Proposal_1.jpg" alt="Proposal Halaman 1" onclick="openLightbox(this.src)"></div>
         <div class="slide"><img src="Proposal_2.jpg" alt="Proposal Halaman 2" onclick="openLightbox(this.src)"></div>
         <div class="slide"><img src="Proposal_3.jpg" alt="Proposal Halaman 3" onclick="openLightbox(this.src)"></div>
@@ -568,6 +595,7 @@
     <p class="tema-sub">Nusantara Baru, Indonesia Maju — Menjaga Semangat Persatuan di Timur Pasar</p>
   </div>
 </section>
+
 <!-- ─── DONASI ─────────────────────────────────────── -->
 <section id="donasi">
   <div class="container reveal">
@@ -709,7 +737,7 @@
   </div>
 </section>
 
-<!-- ─── RENCANA ANGGARAN ───────────────────────────── -->
+<!-- ─── RENCANA ANGGARAN & BUKU KAS ───────────────── -->
 <section id="anggaran">
   <div class="container reveal">
     <span class="section-label">Total Anggaran yang Dibutuhkan</span>
@@ -742,6 +770,18 @@
         <span>Rp. 18.900.000,-</span>
       </div>
     </div>
+
+    <!-- Tombol Buku Kas Terintegrasi -->
+    <div class="buku-kas-wrapper">
+      <a 
+        href="https://htmlpreview.github.io/?https://github.com/Compaz-Reborn/Agustus/blob/main/Buku-Kas.html" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        class="buku-kas-btn">
+        <span>📊 BUKU KAS & PENGELUARAN</span>
+        <span style="font-size: 1.1rem; line-height: 1;">↗</span>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -752,7 +792,7 @@
     <h2 class="section-title">Panitia HUT RI ke-81 COMPAZ</h2>
     <div class="divider"></div>
 
-    <!-- Grid Foto Panitia Utama (Klik foto untuk memperbesar modal) -->
+    <!-- Grid Foto Panitia Utama -->
     <div class="foto-grid" id="fotoGrid"></div>
 
     <div class="anggota-divider">
@@ -765,7 +805,7 @@
       <span class="anggota-chip">🎤 Fajar, Putri — MC Acara</span>
       <span class="anggota-chip">🎭 Lia, Nisa, Salsa, Sunil, Anggi, Tata — Seksi Acara</span>
       <span class="anggota-chip">🎤 Yeni, Indi, Fajar, Lia, Nisa — Seksi Pentas Seni</span>
-      <span class="anggota-chip">🔧 Tata, Khanza, Anggi, Yeni, Fathur, Salsa, Fajar, Lia, Riko, Zaki, Putri, Alfin, Septa, Fardan, Dinda, Arum, Keyra, Danu, Nia, Roy, Indi, Diyah, Sari, Nisa, Dalla, Danar, Husni — Korodinator Lomba</span>
+      <span class="anggota-chip">🔧 Tata, Khanza, Anggi, Yeni, Fathur, Salsa, Fajar, Lia, Riko, Zaki, Putri, Alfin, Septa, Fardan, Dinda, Arum, Keyra, Danu, Nia, Roy, Indi, Diyah, Sari, Nisa, Dalla, Danar, Husni — Koordinator Lomba</span>
       <span class="anggota-chip">🍱 Diyah, Yeni, Dinda, Keyra, Khanza, Anggi, Arum, Sari — Konsumsi</span>
       <span class="anggota-chip">📸 Dalla, Indi, Fathur — Dokumentasi</span>
       <span class="anggota-chip">🔒 Semua Panitia — Keamanan</span>
@@ -839,7 +879,6 @@
   const totalSlides = slides.length;
   let autoSlideInterval;
 
-  // Render Dots Indicator
   if (slides.length > 0) {
     slides.forEach((_, index) => {
       const dot = document.createElement('div');
@@ -897,7 +936,6 @@
 
   startAutoSlide();
 
-  // Lightbox Proposal Fullscreen
   function openLightbox(src) {
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');
@@ -957,7 +995,6 @@
     }
   }
 
-  // Tutup semua modal saat menekan tombol ESC
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       closeLightbox();
