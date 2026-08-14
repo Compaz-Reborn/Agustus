@@ -183,27 +183,37 @@
     font-size:13px; color:var(--tinta-mute); margin:0 0 18px 0;
   }
 
-  /* rincian pemasukan - dotted leader rows */
-  .rincian-row{
-    display:flex; align-items:baseline; gap:8px;
-    padding:9px 0;
-    border-bottom:1px dotted var(--garis);
-    font-size:14.5px;
+  /* tabs */
+  .tab-nav{
+    display:flex; flex-wrap:wrap; gap:6px;
+    margin-bottom:18px;
+    border-bottom:1px solid var(--garis);
   }
-  .rincian-row .nama{ white-space:nowrap; }
-  .rincian-row .leader{
-    flex:1; border-bottom:1px dotted var(--garis);
-    transform:translateY(-4px);
+  .tab-btn{
+    font-family:'Plus Jakarta Sans', sans-serif;
+    font-size:13.5px; font-weight:600;
+    background:none; border:none;
+    color:var(--tinta-mute);
+    padding:10px 4px 12px 4px;
+    margin-right:18px;
+    cursor:pointer;
+    border-bottom:2px solid transparent;
+    margin-bottom:-1px;
+    display:flex; align-items:baseline; gap:6px;
   }
-  .rincian-row .nilai{
+  .tab-btn:hover{ color:var(--tinta); }
+  .tab-btn.active{ color:var(--merah-dark); border-bottom-color:var(--merah); }
+  .tab-total{
     font-family:'IBM Plex Mono', monospace;
-    font-weight:500; white-space:nowrap;
+    font-size:11px; font-weight:500; color:var(--tinta-mute);
   }
-  .rincian-row .bar{
-    height:4px; background:var(--merah); opacity:.55; margin-top:5px;
-    border-radius:2px;
+  .tab-btn.active .tab-total{ color:var(--merah-dark); }
+
+  tr.baris-total td{
+    font-weight:700; border-top:2px solid var(--tinta); border-bottom:none;
+    font-family:'IBM Plex Mono', monospace;
   }
-  .rincian-row.total{ font-weight:700; border-bottom:2px solid var(--tinta); }
+  tr.baris-total td:first-child{ font-family:'Plus Jakarta Sans', sans-serif; }
 
   /* ledger form */
   .formulir{
@@ -316,54 +326,50 @@
     </div>
   </section>
 
-  <section id="rincianSection" style="display:none;">
-    <h2 class="judul-seksi">Rincian Sumber Pemasukan</h2>
-    <p class="ket-seksi">Kontribusi tiap sumber terhadap total pemasukan, sesuai spreadsheet.</p>
-    <div id="rincianList"></div>
-  </section>
+  <section id="detailSection" style="display:none;">
+    <h2 class="judul-seksi">Detail Transaksi</h2>
+    <p class="ket-seksi">Setiap transaksi pemasukan dan pengeluaran, sesuai catatan di sheet "Buku Kas".</p>
 
-  <section>
-    <h2 class="judul-seksi">Catatan Transaksi Tambahan</h2>
-    <p class="ket-seksi">Tambahkan transaksi baru di luar ringkasan spreadsheet. Saldo berjalan dihitung mulai dari saldo saat ini di atas.</p>
-
-    <div class="formulir">
-      <input type="date" id="fTanggal">
-      <input type="text" id="fUraian" placeholder="Uraian, mis. Beli konsumsi lomba">
-      <select id="fJenis">
-        <option value="masuk">Masuk</option>
-        <option value="keluar">Keluar</option>
-      </select>
-      <input type="text" inputmode="numeric" id="fJumlah" placeholder="Jumlah (Rp)">
-      <button id="tambahBtn">Tambah</button>
+    <div class="tab-nav" id="tabNav">
+      <button class="tab-btn active" data-tab="donatur">Donatur <span class="tab-total" id="tabTotalDonatur"></span></button>
+      <button class="tab-btn" data-tab="iuran">Iuran Warga <span class="tab-total" id="tabTotalIuran"></span></button>
+      <button class="tab-btn" data-tab="pkl">PKL <span class="tab-total" id="tabTotalPkl"></span></button>
+      <button class="tab-btn" data-tab="pengeluaran">Pengeluaran <span class="tab-total" id="tabTotalPengeluaran"></span></button>
     </div>
 
-    <table class="buku">
-      <thead>
-        <tr>
-          <th>Tanggal</th>
-          <th>Uraian</th>
-          <th style="text-align:right;">Masuk</th>
-          <th style="text-align:right;">Keluar</th>
-          <th style="text-align:right;">Saldo</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody id="ledgerBody"></tbody>
-    </table>
-    <div id="ledgerKosong" class="kosong" style="display:none;">Belum ada transaksi tambahan. Isi formulir di atas untuk mulai mencatat.</div>
-    <p class="catatan-bersama">Catatan: transaksi tambahan disimpan bersama dan terlihat oleh semua orang yang membuka buku kas ini.</p>
+    <div class="tab-panel" data-panel="donatur">
+      <table class="buku">
+        <thead><tr><th>Nama</th><th style="text-align:right;">Nominal</th></tr></thead>
+        <tbody id="bodyDonatur"></tbody>
+      </table>
+    </div>
+    <div class="tab-panel" data-panel="iuran" style="display:none;">
+      <table class="buku">
+        <thead><tr><th>Tanggal</th><th style="text-align:right;">Nominal</th></tr></thead>
+        <tbody id="bodyIuran"></tbody>
+      </table>
+    </div>
+    <div class="tab-panel" data-panel="pkl" style="display:none;">
+      <table class="buku">
+        <thead><tr><th>Tanggal</th><th style="text-align:right;">Nominal</th></tr></thead>
+        <tbody id="bodyPkl"></tbody>
+      </table>
+    </div>
+    <div class="tab-panel" data-panel="pengeluaran" style="display:none;">
+      <table class="buku">
+        <thead><tr><th>Tanggal</th><th>Keterangan</th><th style="text-align:right;">Nominal</th></tr></thead>
+        <tbody id="bodyPengeluaran"></tbody>
+      </table>
+    </div>
   </section>
 
   <footer>
-    Sumber ringkasan: Google Sheet panitia (tautan CSV publik). Diperbarui otomatis setiap kali halaman ini dibuka atau tombol sinkron ulang ditekan.
+    Sumber data: sheet "Buku Kas" pada Google Sheets panitia (tautan CSV publik). Diperbarui otomatis setiap kali halaman ini dibuka atau tombol sinkron ulang ditekan.
   </footer>
 </div>
 
 <script>
-const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSSIK6ma33DAdiUQ8rMg9l5msopOswKoQ27LYvzgJKgl73ckCzPgvR6dOSpSmFKLogXJVWyZtGFLBce/pub?output=csv";
-const STORAGE_KEY = "buku-kas-transaksi-tambahan";
-
-let saldoSheet = null; // number, saldo dari spreadsheet (basis saldo berjalan)
+const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSSIK6ma33DAdiUQ8rMg9l5msopOswKoQ27LYvzgJKgl73ckCzPgvR6dOSpSmFKLogXJVWyZtGFLBce/pub?gid=1879919825&single=true&output=csv";
 
 function formatRupiah(n){
   if(n===null || n===undefined || isNaN(n)) return "–";
@@ -404,60 +410,45 @@ function parseSheet(text){
   const lines = text.split(/\r?\n/).filter(l => l.length>0);
   const rows = lines.map(parseCsvLine);
 
-  let judul = "Buku Kas";
-  let headerRowIdx = -1;
-  let colPemasukanHeader = -1, colPengeluaranHeader = -1, colSaldoHeader = -1;
+  // Struktur tetap sheet "Buku Kas":
+  // kolom 0-1  = Pemasukan Donatur (Nama, Nominal)
+  // kolom 3-4  = Pemasukan Iuran Warga (Tanggal, Nominal)
+  // kolom 6-7  = Pemasukan PKL (Tanggal, Nominal)
+  // kolom 9-11 = Pengeluaran (Tanggal, Keterangan, Nominal)
+  // baris 0 = judul kolom section, baris 1 = header + total, baris 2+ = data
 
-  rows.forEach((row, idx) => {
-    row.forEach((cell, ci) => {
-      const c = cell.toUpperCase();
-      if(c.includes("TOTAL PEMASUKAN") && colPemasukanHeader===-1){ colPemasukanHeader = ci; headerRowIdx = idx; }
-      if(c.includes("TOTAL PENGELUARAN") && colPengeluaranHeader===-1){ colPengeluaranHeader = ci; }
-      if(c.includes("SALDO") && colSaldoHeader===-1){ colSaldoHeader = ci; }
-    });
-  });
+  const donatur = [], iuranWarga = [], pkl = [], pengeluaran = [];
 
-  // title: first non-empty cell before header row that isn't the header itself
-  for(let i=0;i<rows.length;i++){
-    if(i===headerRowIdx) break;
-    const found = rows[i].find(c => c && c.trim().length>2);
-    if(found){ judul = found.trim(); break; }
+  for(let i=2; i<rows.length; i++){
+    const row = rows[i];
+    const get = (idx) => (row[idx] || "").trim();
+
+    const dNama = get(0), dNominal = get(1);
+    if(dNama){ donatur.push({ nama: dNama, nilai: parseRupiah(dNominal) }); }
+
+    const iTgl = get(3), iNominal = get(4);
+    if(iTgl){ iuranWarga.push({ tanggal: iTgl, nilai: parseRupiah(iNominal) }); }
+
+    const pTgl = get(6), pNominal = get(7);
+    if(pTgl){ pkl.push({ tanggal: pTgl, nilai: parseRupiah(pNominal) }); }
+
+    const eTgl = get(9), eKet = get(10), eNominal = get(11);
+    if(eTgl || eKet){ pengeluaran.push({ tanggal: eTgl, keterangan: eKet, nilai: parseRupiah(eNominal) }); }
   }
 
-  let totalPengeluaran = null, saldo = null;
-  const rincian = [];
-  let totalPemasukanExplicit = null;
+  const totalDonatur = donatur.reduce((s,r)=>s+r.nilai,0);
+  const totalIuran = iuranWarga.reduce((s,r)=>s+r.nilai,0);
+  const totalPkl = pkl.reduce((s,r)=>s+r.nilai,0);
+  const totalPengeluaran = pengeluaran.reduce((s,r)=>s+r.nilai,0);
+  const totalPemasukan = totalDonatur + totalIuran + totalPkl;
+  const saldo = totalPemasukan - totalPengeluaran;
 
-  if(headerRowIdx !== -1){
-    for(let i=headerRowIdx+1; i<rows.length; i++){
-      const row = rows[i];
-      const label = (row[colPemasukanHeader] || "").trim();
-      const valCell = colPemasukanHeader+1 <= row.length-1 ? row[colPemasukanHeader+1] : "";
-
-      if(colPengeluaranHeader !== -1 && totalPengeluaran===null){
-        const v = row[colPengeluaranHeader];
-        if(v && v.trim()) totalPengeluaran = parseRupiah(v);
-      }
-      if(colSaldoHeader !== -1 && saldo===null){
-        const v = row[colSaldoHeader];
-        if(v && v.trim()) saldo = parseRupiah(v);
-      }
-
-      if(!label) continue;
-      if(/^total pemasukan/i.test(label)){
-        totalPemasukanExplicit = parseRupiah(valCell);
-        continue;
-      }
-      const val = parseRupiah(valCell);
-      if(val > 0){
-        rincian.push({ nama: label, nilai: val });
-      }
-    }
-  }
-
-  const totalPemasukan = totalPemasukanExplicit !== null ? totalPemasukanExplicit : rincian.reduce((s,r)=>s+r.nilai,0);
-
-  return { judul, totalPemasukan, totalPengeluaran, saldo, rincian };
+  return {
+    judul: "Laporan Keuangan Panitia",
+    donatur, iuranWarga, pkl, pengeluaran,
+    totalDonatur, totalIuran, totalPkl, totalPengeluaran,
+    totalPemasukan, saldo
+  };
 }
 
 async function muatData(){
@@ -482,28 +473,28 @@ async function muatData(){
     document.getElementById('kartuKeluar').textContent = formatRupiah(data.totalPengeluaran);
     document.getElementById('kartuSaldo').textContent = formatRupiah(data.saldo);
 
-    if(data.rincian.length){
-      document.getElementById('rincianSection').style.display = '';
-      const maxVal = Math.max(...data.rincian.map(r=>r.nilai));
-      const list = document.getElementById('rincianList');
-      list.innerHTML = data.rincian.map(r => `
-        <div class="rincian-row">
-          <span class="nama">${escapeHtml(r.nama)}</span>
-          <span class="leader"></span>
-          <span class="nilai">${formatRupiah(r.nilai)}</span>
-        </div>
-        <div class="bar" style="width:${Math.round((r.nilai/maxVal)*100)}%"></div>
-      `).join('') + `
-        <div class="rincian-row total">
-          <span class="nama">Total Pemasukan</span>
-          <span class="leader"></span>
-          <span class="nilai">${formatRupiah(data.totalPemasukan)}</span>
-        </div>
-      `;
-    }
+    document.getElementById('detailSection').style.display = '';
 
-    saldoSheet = data.saldo;
-    renderLedger();
+    document.getElementById('tabTotalDonatur').textContent = formatRupiah(data.totalDonatur);
+    document.getElementById('tabTotalIuran').textContent = formatRupiah(data.totalIuran);
+    document.getElementById('tabTotalPkl').textContent = formatRupiah(data.totalPkl);
+    document.getElementById('tabTotalPengeluaran').textContent = formatRupiah(data.totalPengeluaran);
+
+    document.getElementById('bodyDonatur').innerHTML =
+      data.donatur.map(r => `<tr><td>${escapeHtml(r.nama)}</td><td class="num">${formatRupiah(r.nilai)}</td></tr>`).join('')
+      + `<tr class="baris-total"><td>Total</td><td class="num">${formatRupiah(data.totalDonatur)}</td></tr>`;
+
+    document.getElementById('bodyIuran').innerHTML =
+      data.iuranWarga.map(r => `<tr><td>${escapeHtml(r.tanggal)}</td><td class="num">${formatRupiah(r.nilai)}</td></tr>`).join('')
+      + `<tr class="baris-total"><td>Total</td><td class="num">${formatRupiah(data.totalIuran)}</td></tr>`;
+
+    document.getElementById('bodyPkl').innerHTML =
+      data.pkl.map(r => `<tr><td>${escapeHtml(r.tanggal)}</td><td class="num">${formatRupiah(r.nilai)}</td></tr>`).join('')
+      + `<tr class="baris-total"><td>Total</td><td class="num">${formatRupiah(data.totalPkl)}</td></tr>`;
+
+    document.getElementById('bodyPengeluaran').innerHTML =
+      data.pengeluaran.map(r => `<tr><td>${escapeHtml(r.tanggal)}</td><td>${escapeHtml(r.keterangan)}</td><td class="num keluar">${formatRupiah(r.nilai)}</td></tr>`).join('')
+      + `<tr class="baris-total"><td colspan="2">Total</td><td class="num">${formatRupiah(data.totalPengeluaran)}</td></tr>`;
 
     dot.className = '';
     const now = new Date();
@@ -513,8 +504,6 @@ async function muatData(){
     txt.textContent = 'Gagal menyinkronkan data';
     errArea.innerHTML = `<div class="err-box">Tidak dapat memuat data dari Google Sheet (${escapeHtml(err.message)}). Periksa apakah sheet masih dipublikasikan, lalu tekan "Sinkron ulang". Anda tetap bisa mencatat transaksi tambahan di bawah.</div>`;
     document.getElementById('judulUtama').textContent = 'Buku Kas';
-    saldoSheet = saldoSheet !== null ? saldoSheet : 0;
-    renderLedger();
   }
 }
 
@@ -522,99 +511,19 @@ function escapeHtml(s){
   return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 
-// ---- Ledger (manual transactions), persisted via shared storage ----
-async function ambilTransaksi(){
-  try{
-    const res = await window.storage.get(STORAGE_KEY, true);
-    if(res && res.value) return JSON.parse(res.value);
-  }catch(e){}
-  return [];
-}
-async function simpanTransaksi(list){
-  try{
-    await window.storage.set(STORAGE_KEY, JSON.stringify(list), true);
-  }catch(e){
-    console.error('Gagal menyimpan', e);
-  }
-}
-
-let transaksiCache = [];
-
-function renderLedger(){
-  const body = document.getElementById('ledgerBody');
-  const kosong = document.getElementById('ledgerKosong');
-  if(!transaksiCache.length){
-    body.innerHTML = '';
-    kosong.style.display = '';
-    return;
-  }
-  kosong.style.display = 'none';
-
-  const sorted = [...transaksiCache].sort((a,b)=> (a.tanggal||'').localeCompare(b.tanggal||'') || a.ts - b.ts);
-  let running = saldoSheet !== null ? saldoSheet : 0;
-  const rowsHtml = sorted.map(t => {
-    running += (t.jenis === 'masuk' ? t.jumlah : -t.jumlah);
-    return `
-      <tr>
-        <td>${t.tanggal ? formatTanggal(t.tanggal) : '–'}</td>
-        <td>${escapeHtml(t.uraian || '(tanpa uraian)')}</td>
-        <td class="num masuk">${t.jenis==='masuk' ? formatRupiah(t.jumlah) : ''}</td>
-        <td class="num keluar">${t.jenis==='keluar' ? formatRupiah(t.jumlah) : ''}</td>
-        <td class="num saldo-cell">${formatRupiah(running)}</td>
-        <td><button class="hapus-btn" data-id="${t.id}" title="Hapus">✕</button></td>
-      </tr>
-    `;
-  }).join('');
-  body.innerHTML = rowsHtml;
-
-  body.querySelectorAll('.hapus-btn').forEach(btn=>{
-    btn.addEventListener('click', async () => {
-      const id = btn.getAttribute('data-id');
-      transaksiCache = transaksiCache.filter(t => t.id !== id);
-      await simpanTransaksi(transaksiCache);
-      renderLedger();
-    });
-  });
-}
-
-function formatTanggal(iso){
-  const d = new Date(iso + 'T00:00:00');
-  if(isNaN(d)) return iso;
-  return d.toLocaleDateString('id-ID', { day:'2-digit', month:'short', year:'numeric' });
-}
-
-document.getElementById('tambahBtn').addEventListener('click', async () => {
-  const tanggal = document.getElementById('fTanggal').value;
-  const uraian = document.getElementById('fUraian').value.trim();
-  const jenis = document.getElementById('fJenis').value;
-  const jumlahRaw = document.getElementById('fJumlah').value;
-  const jumlah = parseRupiah(jumlahRaw);
-
-  if(!uraian || !jumlah){
-    alert('Isi uraian dan jumlah terlebih dahulu.');
-    return;
-  }
-
-  const entri = {
-    id: Date.now().toString(36) + Math.random().toString(36).slice(2,7),
-    ts: Date.now(),
-    tanggal: tanggal || new Date().toISOString().slice(0,10),
-    uraian, jenis, jumlah
-  };
-  transaksiCache.push(entri);
-  await simpanTransaksi(transaksiCache);
-  renderLedger();
-
-  document.getElementById('fUraian').value = '';
-  document.getElementById('fJumlah').value = '';
-});
-
 document.getElementById('refreshBtn').addEventListener('click', muatData);
 
-(async function init(){
-  transaksiCache = await ambilTransaksi();
-  await muatData();
-})();
+document.getElementById('tabNav').addEventListener('click', (e) => {
+  const btn = e.target.closest('.tab-btn');
+  if(!btn) return;
+  const tab = btn.getAttribute('data-tab');
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b === btn));
+  document.querySelectorAll('.tab-panel').forEach(p => {
+    p.style.display = (p.getAttribute('data-panel') === tab) ? '' : 'none';
+  });
+});
+
+muatData();
 </script>
 </body>
 </html>
