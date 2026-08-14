@@ -89,6 +89,23 @@
     margin:0 0 22px 0;
     max-width:60ch;
   }
+  .presence-row{
+    display:flex; align-items:center; gap:8px;
+    margin-bottom:24px;
+    font-size:12.5px;
+  }
+  .presence-count{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px; color:var(--tinta-mute);
+  }
+  .dot-online{
+    width:7px; height:7px; border-radius:50%;
+    background:var(--hijau);
+    box-shadow:0 0 0 3px rgba(46,107,69,0.15);
+    animation:pulse 1.6s infinite;
+    flex-shrink:0;
+  }
+
   .sync-row{
     display:flex; align-items:center; gap:10px; flex-wrap:wrap;
     font-family:'IBM Plex Mono', monospace;
@@ -300,6 +317,11 @@
     <p class="subjudul" id="subjudul">Ringkasan pemasukan, pengeluaran, dan sisa saldo — diambil otomatis dari spreadsheet panitia.</p>
   </header>
 
+  <div class="presence-row">
+    <span class="dot-online"></span>
+    <span class="presence-count" id="presenceCount">Memuat kehadiran…</span>
+  </div>
+
   <div class="sync-row">
     <span id="syncDot" class="loading"></span>
     <span id="syncText">Menyinkronkan data…</span>
@@ -370,6 +392,9 @@
 
 <script>
 const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSSIK6ma33DAdiUQ8rMg9l5msopOswKoQ27LYvzgJKgl73ckCzPgvR6dOSpSmFKLogXJVWyZtGFLBce/pub?gid=1879919825&single=true&output=csv";
+const PRESENCE_KEY = "buku-kas-kehadiran";
+const PRESENCE_TTL = 20000; // ms sebelum dianggap offline
+const sessionId = 'sesi-' + Math.random().toString(36).slice(2,10);
 
 function formatRupiah(n){
   if(n===null || n===undefined || isNaN(n)) return "–";
@@ -510,6 +535,38 @@ async function muatData(){
 function escapeHtml(s){
   return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
+
+// ---- Kehadiran / presence (jumlah orang yang sedang melihat) ----
+async function detakKehadiran(){
+  let map = {};
+  try{
+    const res = await window.storage.get(PRESENCE_KEY, true);
+    if(res && res.value) map = JSON.parse(res.value);
+  }catch(e){ map = {}; }
+
+  const now = Date.now();
+  Object.keys(map).forEach(k => { if(now - map[k].ts > PRESENCE_TTL) delete map[k]; });
+  map[sessionId] = { ts: now };
+
+  try{
+    await window.storage.set(PRESENCE_KEY, JSON.stringify(map), true);
+  }catch(e){ console.error('Gagal mencatat kehadiran', e); }
+
+  renderKehadiran(map, now);
+}
+
+function renderKehadiran(map, now){
+  const countEl = document.getElementById('presenceCount');
+  const aktif = Object.values(map).filter(v => now - v.ts <= PRESENCE_TTL).length;
+  countEl.textContent = aktif + (aktif === 1 ? ' orang sedang melihat' : ' orang sedang melihat');
+}
+
+function initKehadiran(){
+  detakKehadiran();
+  setInterval(detakKehadiran, 7000);
+}
+
+initKehadiran();
 
 document.getElementById('refreshBtn').addEventListener('click', muatData);
 
