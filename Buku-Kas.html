@@ -390,11 +390,25 @@
   </footer>
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-database-compat.js"></script>
 <script>
 const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSSIK6ma33DAdiUQ8rMg9l5msopOswKoQ27LYvzgJKgl73ckCzPgvR6dOSpSmFKLogXJVWyZtGFLBce/pub?gid=1879919825&single=true&output=csv";
-const PRESENCE_KEY = "buku-kas-kehadiran";
-const PRESENCE_TTL = 20000; // ms sebelum dianggap offline
 const sessionId = 'sesi-' + Math.random().toString(36).slice(2,10);
+
+// ---- Konfigurasi Firebase ----
+// Ganti nilai di bawah ini dengan firebaseConfig dari project Firebase Anda
+// (Firebase Console > Project settings > Your apps > SDK setup and configuration).
+const firebaseConfig = {
+  apiKey: "AIzaSyCvTj2IDWkl5ihflmsfrGFlkA9zo0yg740",
+  authDomain: "buku-kas-50105.firebaseapp.com",
+  databaseURL: "https://buku-kas-50105-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "buku-kas-50105",
+  storageBucket: "buku-kas-50105.firebasestorage.app",
+  messagingSenderId: "27294689414",
+  appId: "1:27294689414:web:e136f4ca36bf383a044907",
+  measurementId: "G-X7PJ4PLCZG"
+};
 
 function formatRupiah(n){
   if(n===null || n===undefined || isNaN(n)) return "–";
@@ -537,51 +551,60 @@ function escapeHtml(s){
 }
 
 // ---- Kehadiran / presence (jumlah orang yang sedang melihat) ----
-// Setiap sesi menulis ke key miliknya sendiri (presensi:<sessionId>) supaya
-// tidak ada dua sesi yang saling menimpa data saat menulis bersamaan
-// (last-write-wins pada key bersama tunggal adalah penyebab bug "tetap 1 orang").
-async function detakKehadiran(){
-  const now = Date.now();
-
-  try{
-    await window.storage.set(PRESENCE_KEY + ':' + sessionId, String(now), true);
-  }catch(e){ console.error('Gagal mencatat kehadiran', e); }
-
-  try{
-    const listRes = await window.storage.list(PRESENCE_KEY + ':', true);
-    const keys = (listRes && listRes.keys) || [];
-    let aktif = 0;
-
-    await Promise.all(keys.map(async (k) => {
-      try{
-        const r = await window.storage.get(k, true);
-        if(r && r.value && (now - parseInt(r.value, 10)) <= PRESENCE_TTL){
-          aktif++;
-        } else if(r && r.value){
-          window.storage.delete(k, true).catch(()=>{});
-        }
-      }catch(e){ /* key mungkin baru dihapus sesi lain, abaikan */ }
-    }));
-
-    renderKehadiran(aktif);
-  }catch(e){
-    console.error('Gagal membaca kehadiran', e);
-  }
-}
-
+// Pakai Firebase Realtime Database supaya jalan di hosting mana pun (GitHub Pages, dst),
+// bukan window.storage yang hanya tersedia di dalam Claude.ai Artifacts.
+// Tiap sesi menulis node presence/<sessionId> milik sendiri, dan Firebase otomatis
+// menghapusnya lewat onDisconnect() begitu koneksi terputus (tab ditutup, offline, dll).
 function renderKehadiran(aktif){
   const countEl = document.getElementById('presenceCount');
+  if(aktif === null){
+    countEl.textContent = 'Tidak dapat memuat kehadiran';
+    return;
+  }
   countEl.textContent = aktif + (aktif === 1 ? ' orang sedang melihat' : ' orang sedang melihat');
 }
 
 function initKehadiran(){
-  detakKehadiran();
-  setInterval(detakKehadiran, 7000);
+  const countEl = document.getElementById('presenceCount');
 
-  // best-effort: hapus jejak sesi saat tab ditutup/berpindah
+  if(typeof firebase === 'undefined' || firebaseConfig.apiKey === 'ISI_DENGAN_API_KEY_ANDA'){
+    countEl.textContent = 'Kehadiran belum dikonfigurasi';
+    console.warn('Firebase belum dikonfigurasi: isi firebaseConfig di bagian atas script.');
+    return;
+  }
+
+  try{
+    firebase.initializeApp(firebaseConfig);
+  }catch(e){
+    console.error('Gagal inisialisasi Firebase', e);
+    renderKehadiran(null);
+    return;
+  }
+
+  const db = firebase.database();
+  const myRef = db.ref('presence/' + sessionId);
+
+  // Saat koneksi ke Firebase aktif, daftarkan sesi ini & atur agar otomatis
+  // terhapus saat koneksi putus (tutup tab, sinyal hilang, dll).
+  db.ref('.info/connected').on('value', (snap) => {
+    if(snap.val() === true){
+      myRef.onDisconnect().remove();
+      myRef.set(true);
+    }
+  });
+
+  // Dengarkan seluruh node presence secara real-time, hitung jumlah sesi aktif.
+  db.ref('presence').on('value', (snapshot) => {
+    renderKehadiran(snapshot.numChildren());
+  }, (err) => {
+    console.error('Gagal membaca kehadiran', err);
+    renderKehadiran(null);
+  });
+
+  // Best-effort: hapus manual saat tab ditutup/berpindah (jaga-jaga selain onDisconnect).
   document.addEventListener('visibilitychange', () => {
     if(document.visibilityState === 'hidden'){
-      window.storage.delete(PRESENCE_KEY + ':' + sessionId, true).catch(()=>{});
+      myRef.remove();
     }
   });
 }
